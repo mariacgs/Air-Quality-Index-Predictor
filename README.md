@@ -1,2 +1,2 @@
 # Air-Quality-Index-Predictor
-Cloud COmputing project 2026
+Cloud Computing project 2026
