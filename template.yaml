@@ -1,0 +1,45 @@
+Transform: 
+  AWS::Serverless-2016-10-31
+
+Resources:
+  XGBoostPredictorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: !Ref MemSizeForLambda
+      Runtime: python3.11
+      Timeout: 15
+      Handler: lambda_xgb.lambda_handler
+      CodeUri: . 
+      Events:
+        XGBoostApiEvent:
+          Type: Api
+          Properties:
+            Method: post
+            Path: predict/xgb
+
+  LightGBMPredictorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: !Ref MemSizeForLambda
+      Runtime: python3.11
+      Timeout: 15
+      Handler: lambda_lgbm.lambda_handler
+      CodeUri: . 
+      Events:
+        LgbmApiEvent:
+          Type: Api
+          Properties:
+            Method: post
+            Path: predict/lgbm
+
+Parameters:
+  MemSizeForLambda:
+    Description: Memory size for lambda functions
+    Type: Number
+    Default: 512
+    AllowedValues:
+      - 256
+      - 512
+      - 1024
+
+    
