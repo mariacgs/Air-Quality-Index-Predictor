@@ -16,7 +16,7 @@ def lambda_handler(event, context):
             'statusCode': 200,
             'body': json.dumps({
                 'model': 'LightGBM',
-                'predicted_aqi': round(float(prediction[0]), 2)
+                'predicted_aqi': round(float(prediction[0][0]), 2)
             })
         }
     except Exception as e:

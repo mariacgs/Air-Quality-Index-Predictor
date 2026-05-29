@@ -38,7 +38,7 @@ def lambda_handler(event, context):
         input_name = session.get_inputs()[0].name
         prediction = session.run(None, {input_name: features})[0]
         
-        raw_val = float(prediction[0])
+        raw_val = float(prediction[0][0])
         final_level = int(max(1, min(6, round(raw_val))))
         
         return {
