@@ -17,7 +17,7 @@ def lambda_handler(event, context):
             'statusCode': 200,
             'body': json.dumps({
                 'model': 'XGBoost',
-                'predicted_aqi': round(float(prediction[0]), 3)
+                'predicted_aqi': round(float(prediction[0][0]), 3)
             })
         }
     except Exception as e:

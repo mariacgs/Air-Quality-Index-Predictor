@@ -4,38 +4,40 @@ from locust import HttpUser, task, between, LoadTestShape
 class AQIPredictorUser(HttpUser):
     wait_time = between(1, 2)
 
-    # Based on Person 1's Lambda code, features must be a flat array
     payload_lgbm = {
-        # 10 features
         "features": [45.2, 78.1, 32.5, 1.2, 8.3, 65.0, 22.1, 58.0, 3.2, 1013.0, 0.0]
     }
 
     payload_xgb = {
-        # 12 features
         "features": [45.2, 78.1, 32.5, 1.2, 8.3, 65.0, 22.1, 58.0, 3.2, 1013.0, 0.0, 0.0]
     }
 
     @task(1)
-    def test_xgb(self):
-        self.client.post("/predict/xgb", json=self.payload_xgb)
+    def test_xgb_arpa(self):
+        # 12 feature per ARPA
+        self.client.post("/predict/xgb_arpa", json=self.payload_xgb)
 
     @task(1)
-    def test_lgbm(self):
-        self.client.post("/predict/lgbm", json=self.payload_lgbm)
+    def test_xgb_baseline(self):
+        # USA payload_lgbm CHE HA 11 FEATURE!
+        self.client.post("/predict/xgb_baseline", json=self.payload_lgbm)
 
-# Custom shape to simulate the 4-Phase Burst
+    @task(2)
+    def test_lgbm(self):
+        # 11 feature per LGBM
+        self.client.post("/predict/lgbm", json=self.payload_lgbm)
 
 
 class BurstWorkload(LoadTestShape):
     stages = [
-        # Phase 1: Baseline (5m)
-        {"duration": 300, "users": 10, "spawn_rate": 2},
-        # Phase 2: Ramp-up (2m)
-        {"duration": 420, "users": 600, "spawn_rate": 10},
-        # Phase 3: Sustain (5m)
-        {"duration": 720, "users": 600, "spawn_rate": 10},
-        # Phase 4: Recovery (5m)
-        {"duration": 1020, "users": 10, "spawn_rate": 10},
+        # Phase 1: Baseline (5m) - 5 users
+        {"duration": 300, "users": 5, "spawn_rate": 1},
+        # Phase 2: Ramp-up (2m) - 150 users (Safe for AWS Academy!)
+        {"duration": 420, "users": 150, "spawn_rate": 5},
+        # Phase 3: Sustain (5m) - 150 users
+        {"duration": 720, "users": 150, "spawn_rate": 5},
+        # Phase 4: Recovery (5m) - 5 users
+        {"duration": 1020, "users": 5, "spawn_rate": 5},
     ]
 
     def tick(self):
