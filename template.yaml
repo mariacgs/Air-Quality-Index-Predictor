@@ -2,13 +2,13 @@ Transform:
   AWS::Serverless-2016-10-31
 
 Resources:
-  XGBoostPredictorFunction:
+  XGBoostArpaPredictorFunction:
     Type: AWS::Serverless::Function
     Properties:
       MemorySize: !Ref MemSizeForLambda
       Runtime: python3.12
       Timeout: 15
-      Handler: lambda_xgb.lambda_handler
+      Handler: lambda_xgb_arpa.lambda_handler
       CodeUri: src 
       Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/LabRole"
       Events:
@@ -16,7 +16,23 @@ Resources:
           Type: Api
           Properties:
             Method: post
-            Path: /predict/xgb
+            Path: /predict/xgb_arpa
+
+  XGBoostBaselinePredictorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: !Ref MemSizeForLambda
+      Runtime: python3.12
+      Timeout: 15
+      Handler: lambda_xgb_baseline.lambda_handler
+      CodeUri: src 
+      Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/LabRole"
+      Events:
+        XGBoostApiEvent:
+          Type: Api
+          Properties:
+            Method: post
+            Path: /predict/xgb_baseline
 
   LightGBMPredictorFunction:
     Type: AWS::Serverless::Function
@@ -42,6 +58,4 @@ Parameters:
     AllowedValues:
       - 256
       - 512
-      - 1024
-
-    
+      - 1024    

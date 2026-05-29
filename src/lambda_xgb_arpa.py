@@ -1,8 +1,9 @@
+
 import json
 import numpy as np
 import onnxruntime as ort
 
-session = ort.InferenceSession("xgb_aqi_model.onnx")
+session = ort.InferenceSession("arpa_aqi_model.onnx")
 
 def get_eaqi_label(level):
     """Maps the integer level to the official EEA health category."""
