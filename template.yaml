@@ -50,6 +50,22 @@ Resources:
             Method: post
             Path: /predict/lgbm
 
+  LightGBMArpaPredictorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      MemorySize: !Ref MemSizeForLambda
+      Runtime: python3.12
+      Timeout: 15
+      Handler: lambda_lgbm_arpa.lambda_handler
+      CodeUri: src
+      Role: !Sub "arn:aws:iam::${AWS::AccountId}:role/LabRole"
+      Events:
+        LgbmApiEvent:
+          Type: Api
+          Properties:
+            Method: post
+            Path: /predict/lgbm_arpa 
+
 Parameters:
   MemSizeForLambda:
     Description: Memory size for lambda functions
