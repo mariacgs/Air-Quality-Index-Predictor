@@ -12,7 +12,7 @@ class AQIPredictorUser(HttpUser):
         "features": [45.2, 78.1, 32.5, 1.2, 8.3, 65.0, 22.1, 58.0, 3.2, 1013.0, 0.0, 0.0]
     }
 
-    # @task(1)
+    @task(1)
     def test_xgb_arpa(self):
         # 12 feature per ARPA
         self.client.post("/predict/xgb_arpa", json=self.payload_xgb)
@@ -22,7 +22,7 @@ class AQIPredictorUser(HttpUser):
         # USA payload_lgbm CHE HA 11 FEATURE!
         self.client.post("/predict/xgb_baseline", json=self.payload_lgbm)
 
-    # @task(1)
+    @task(1)
     def test_lgbm(self):
         # 11 feature per LGBM
         self.client.post("/predict/lgbm", json=self.payload_lgbm)
@@ -47,7 +47,7 @@ class BurstWorkload(LoadTestShape):
             if run_time < stage["duration"]:
                 return stage["users"], stage["spawn_rate"]
         return None
-'''
+
 
 
 class ShortWorkload(LoadTestShape):
@@ -64,4 +64,14 @@ class ShortWorkload(LoadTestShape):
             if run_time < stage["duration"]:
                 return stage["users"], stage["spawn_rate"]
         # Il test si fermerà automaticamente dopo 300 secondi (5 minuti)
+        return None
+'''
+
+
+class SpikeWorkload(LoadTestShape):
+    def tick(self):
+        run_time = self.get_run_time()
+        # Instantly spawn 60 users and hold for 3 minutes
+        if run_time < 180:
+            return (60, 60)  # (Total Users, Spawn Rate per second)
         return None
