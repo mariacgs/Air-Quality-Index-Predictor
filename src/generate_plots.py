@@ -124,7 +124,7 @@ def plot_user_latency():
 def plot_framework_showdown():
     """Plot 3: LightGBM vs XGBoost Baseline vs ARPA XGBoost vs LightGBM ARPA"""
     frameworks = ['LightGBM',
-                  'XGBoost (Baseline)', 'ARPA XGBoost', 'LightGBM ARPA']
+                  'XGBoost', 'XGBoost ARPA', 'LightGBM ARPA']
     # dur_arpa_xgb da definire se disponibile
     duration = [dur_lgbm, dur_xgb, dur_arpa_xgb, dur_lgbm_arpa]
 
