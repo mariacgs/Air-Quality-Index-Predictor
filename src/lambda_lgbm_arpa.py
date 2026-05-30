@@ -3,7 +3,7 @@ import json
 import numpy as np
 import onnxruntime as ort
 
-session = ort.InferenceSession("arpa_aqi_model.onnx")
+session = ort.InferenceSession("arpa_lgbm_model.onnx")
 
 
 def get_eaqi_label(level):
@@ -51,7 +51,7 @@ def lambda_handler(event, context):
                 'Access-Control-Allow-Origin': '*'
             },
             'body': json.dumps({
-                'model': 'XGBoost-EAQI-v1',
+                'model': 'LightGBM-EAQI-v1',
                 'continuous_score': round(raw_val, 4),
                 'eaqi_level': final_level,
                 'status': get_eaqi_label(final_level),
