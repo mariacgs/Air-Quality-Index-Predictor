@@ -36,9 +36,9 @@ cw_256 = '../results/results_vs_265mb/logs-insights-results-256mb4.csv'
 cw_512 = '../results/results_vs_512mb/logs-insights-results-512mb4.csv'
 cw_1024 = '../results/results_vs_1024mb/logs-insights-results-1024mb4.csv'
 
-locust_256 = '../results/results_vs_265mb/Locust_2026-05-29-14h37_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-256mb4.csv'
-locust_512 = '../results/results_vs_512mb/Locust_2026-05-29-14h10_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-512mb4.csv'
-locust_1024 = '../results/results_vs_1024mb/Locust_2026-05-29-15h02_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-1024mb4.csv'
+locust_256 = '../results/results_vs_265mb/Locust_2026-05-30-18h55_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-256mb4.csv'
+locust_512 = '../results/results_vs_512mb/Locust_2026-05-30-18h33_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-512mb4.csv'
+locust_1024 = '../results/results_vs_1024mb/Locust_2026-05-30-19h17_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-1024mb4.csv'
 
 _, billed_256 = get_cw_duration(cw_256)
 _, billed_512 = get_cw_duration(cw_512)
@@ -56,11 +56,11 @@ cw_arpa_lgbm = '../results/results_lgbm_arpa_only_50/logs-insights-results-lgbm_
 
 dur_lgbm, _ = get_cw_duration(cw_lgbm)
 dur_xgb, _ = get_cw_duration(cw_xgb)
-dur_lgbm_arpa, _ = get_cw_duration(cw_arpa_lgbm)  
+dur_lgbm_arpa, _ = get_cw_duration(cw_arpa_lgbm)
 dur_arpa_xgb, _ = get_cw_duration(cw_arpa_xgb)
 
 # 3. Dati per Cold Start (Spike)
-cw_spike = '../results/results_coldstart_80/logs-insights-results-coldstart-80-4.csv'
+cw_spike = '../results/results_coldstart_80/logs-insights-results-coldstart-60.csv'
 max_cold_spike = get_cw_coldstart(cw_spike)
 dur_warm_spike, _ = get_cw_duration(cw_spike)
 
@@ -123,7 +123,8 @@ def plot_user_latency():
 
 def plot_framework_showdown():
     """Plot 3: LightGBM vs XGBoost Baseline vs ARPA XGBoost vs LightGBM ARPA"""
-    frameworks = ['LightGBM', 'XGBoost (Baseline)', 'ARPA XGBoost', 'LightGBM ARPA']
+    frameworks = ['LightGBM',
+                  'XGBoost (Baseline)', 'ARPA XGBoost', 'LightGBM ARPA']
     # dur_arpa_xgb da definire se disponibile
     duration = [dur_lgbm, dur_xgb, dur_arpa_xgb, dur_lgbm_arpa]
 
