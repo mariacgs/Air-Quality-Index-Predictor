@@ -60,7 +60,7 @@ dur_lgbm_arpa, _ = get_cw_duration(cw_arpa_lgbm)
 dur_arpa_xgb, _ = get_cw_duration(cw_arpa_xgb)
 
 # 3. Dati per Cold Start (Spike)
-cw_spike = '../results/results_coldstart_80/logs-insights-results-coldstart-60.csv'
+cw_spike = '../results/results_coldstart_80/logs-insights-results-80-4.csv'
 max_cold_spike = get_cw_coldstart(cw_spike)
 dur_warm_spike, _ = get_cw_duration(cw_spike)
 
