@@ -14,31 +14,31 @@ class AQIPredictorUser(HttpUser):
 
     @task(1)
     def test_xgb_arpa(self):
-        # 12 feature per ARPA
+        # 12 features for ARPA
         self.client.post("/predict/xgb_arpa", json=self.payload_xgb)
 
     @task(1)
     def test_xgb_baseline(self):
-        # USA payload_lgbm CHE HA 11 FEATURE!
+        # 11 features for baseline XGB (same as LGBM)
         self.client.post("/predict/xgb_baseline", json=self.payload_lgbm)
 
     @task(1)
     def test_lgbm(self):
-        # 11 feature per LGBM
+        # 11 features for LGBM
         self.client.post("/predict/lgbm", json=self.payload_lgbm)
 
     @task(1)
     def test_lgbm_arpa(self):
-        # 12 feature per ARPA
+        # 12 features for ARPA
         self.client.post("/predict/lgbm_arpa", json=self.payload_xgb)
 
-
+#UNCOMMENT THE TYPE OF THE WORKLOAD YOU WANT TO TEST
 '''
 class BurstWorkload(LoadTestShape):
     stages = [
         # Phase 1: Baseline (5m) - 5 users
         {"duration": 300, "users": 5, "spawn_rate": 1},
-        # Phase 2: Ramp-up (2m) - 150 users (Safe for AWS Academy!)
+        # Phase 2: Ramp-up (2m) - 150 users 
         {"duration": 420, "users": 150, "spawn_rate": 5},
         # Phase 3: Sustain (5m) - 150 users
         {"duration": 720, "users": 150, "spawn_rate": 5},
@@ -54,9 +54,9 @@ class BurstWorkload(LoadTestShape):
         return None
 
     
+'''
 
-
-
+'''
 class ShortWorkload(LoadTestShape):
     stages = [
         # Fase 1: Riscaldamento (primi 30 secondi) - 10 utenti
@@ -70,13 +70,12 @@ class ShortWorkload(LoadTestShape):
         for stage in self.stages:
             if run_time < stage["duration"]:
                 return stage["users"], stage["spawn_rate"]
-        # Il test si fermerà automaticamente dopo 300 secondi (5 minuti)
+        
         return None
-
 
 '''
 
-
+'''
 class SpikeWorkload(LoadTestShape):
     def tick(self):
         run_time = self.get_run_time()
@@ -84,3 +83,5 @@ class SpikeWorkload(LoadTestShape):
         if run_time < 180:
             return (80, 80)  # (Total Users, Spawn Rate per second)
         return None
+
+'''
