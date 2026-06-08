@@ -14,7 +14,7 @@ os.makedirs('../plots', exist_ok=True)
 def plot_tail_latency():
     """Plot 5: Tail Latency Percentile Curve"""
     # Load 512MB Locust data
-    csv_path = "../results/results_vs_512mb/Locust_2026-05-30-18h33_locustfile.py_https___3fxen53kw4.execute-api.us-east-1.amazonaws.com_Prod_requests-512mb4.csv"
+    csv_path = "../results/results_coldstart_80/Locust_2026-05-31-10h24_locustfile.py_https___fqci4p18k0.execute-api.us-east-1.amazonaws.com_Prod_requests-80-4.csv"
     df = pd.read_csv(csv_path)
 
     # Filter out the 'Aggregated' row
